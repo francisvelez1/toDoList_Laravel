@@ -1,0 +1,197 @@
+body{
+margin: 0;
+background-color: #faf8eb;
+}
+
+
+
+#text1{
+    color: black;
+    font-size: 55px;
+    position: absolute;
+    left: 620px;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+#container1,#container2,#container3{
+    position: absolute;
+    height: 450px;
+    width: 450px;
+    background-color: white;
+    box-shadow: 5px 5px 10px gray;
+    border-radius: 10px;
+}
+
+#container1{
+    top: 190px;
+    left: 50px;
+}
+
+#container2{
+    top: 190px;
+    left: 550px;
+}
+
+#container3{
+    top:190px;
+    left: 1050px;
+}
+
+#containerTitle1,#containerTitle2,#containerTitle3{
+    font-family: 'Poppins', sans-serif;
+    position: absolute;
+    
+}
+
+#containerTitle1{
+    top: 120px;
+    left: 60px;
+}
+#containerTitle2{
+    top: 120px;
+    left: 560px;
+}
+#containerTitle3{
+    top: 120px;
+    left: 1060px;
+}
+
+
+.taskList {
+    padding: 10px;
+    overflow-y: auto;
+    height: 350px;
+}
+
+.taskObject {
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+
+.to-do {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.in-progress {
+    background-color: rgba(255, 165, 0, 0.2);
+}
+
+.finished {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+#AddTaskBtn{
+    position: absolute;
+    height: 50px;
+    width: 150px;
+    top: 390px;
+    left: 20px;
+    font-family: 'Poppins',sans-serif;
+    font-size: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#formContainer{
+    display: none;
+    position: fixed;
+    height: 500px;
+    width: 600px;
+    top: 30px;
+    left: 450px;
+    background-color: white;
+    box-shadow: 0px 0px 10px gray;
+    border: 1px solid black;
+}
+
+#headline{
+    position: absolute;
+    top: 10px;
+    left: 210px;
+}
+
+#closeForm{
+    position: absolute;
+    left: 570px;
+    top: 10px;
+    background-color: transparent;
+    border: transparent;
+    cursor: pointer;
+}
+
+#label1,#label2{
+    font-family: 'Poppins',sans-serif;
+    font-size: 30px;
+    position: absolute;
+
+}
+#label1{
+    top: 80px;
+    left: 20px;
+}
+
+#label2{
+    top: 180px;
+    left: 20px;
+}
+
+#taskInput1{
+    position: absolute;
+    height: 30px;
+    width: 500px;
+    top: 125px;
+    left: 20px;
+    border: 1px solid gray;
+}
+#taskInput2{
+    position: absolute;
+    height: 90px;
+    width: 500px;
+    top: 230px;
+    left: 20px;
+    border: 2px solid gray;
+}
+
+#category{
+    position: absolute;
+    top: 400px;
+    left: 300px;
+    height: 30px;
+    width: 200px;
+    cursor: pointer;
+}
+
+#label3{
+    position: absolute;
+    font-family: 'Poppins',sans-serif;
+    font-size: 20px;
+    top: 400px;
+    left: 20px;
+}
+
+#submitButton{
+    position: absolute;
+    font-family: 'Poppins',sans-serif;
+    font-size: 20px;
+    top: 450px;
+    left: 20px;
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+    padding: 1px;
+}
+
+.closeTask{
+    background-color: transparent;
+    border: transparent;
+    margin-left: 300px;
+    font-size: 15px;
+    cursor: pointer;
+}
