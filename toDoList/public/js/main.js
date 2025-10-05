@@ -1,56 +1,105 @@
-document.addEventListener("DOMContentLoaded",function(){
+const addTaskBtn = document.getElementById("AddTaskBtn");
+const formContainer = document.getElementById("formContainer");
+const closeFormBtn = document.getElementById("closeForm");
+const submitBtn = document.getElementById("submitButton");
+const headline = document.getElementById("headline");
 
-const form = document.getElementById("formContainer");
-const addTask = document.getElementById("AddTaskBtn");
-const closeButton = document.getElementById("closeForm");
-
-
-addTask.addEventListener("click",function(){
-    form.style.display = "block";
+// Show form for adding
+addTaskBtn.addEventListener("click", () => {
+    document.getElementById("taskId").value = ""; // Clear ID
+    document.getElementById("taskInput1").value = "";
+    document.getElementById("taskInput2").value = "";
+    document.getElementById("category").value = "toDo";
+    headline.textContent = "Add New Task";
+    formContainer.style.display = "block";
 });
 
-closeButton.addEventListener("click",function(){
-    form.style.display = "none";
-})
+// Close form
+closeFormBtn.addEventListener("click", () => {
+    formContainer.style.display = "none";
+});
 
+// Handle add/update submit
+submitBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
 
-})
+    const id = document.getElementById("taskId").value;
+    const title = document.getElementById("taskInput1").value;
+    const description = document.getElementById("taskInput2").value;
+    const status = document.getElementById("category").value;
 
+    const method = id ? "PUT" : "POST";
+    const url = id ? `/tasks/${id}` : "/tasks";
 
-const taskNameInput = document.getElementById("taskInput1");
-const taskDescriptionInput = document.getElementById("taskInput2");
-const statusInput = document.getElementById("category");
-const submitTask = document.getElementById("submitButton");
-
-
-submitButton.addEventListener("click",addTasktoList);
-
-function addTasktoList() {
-    const taskName = taskNameInput.value;
-    const description = taskDescriptionInput.value;
-    const status = statusInput.value;
-
-    const template = document.getElementById("taskTemplate");
-    const newTask = template.cloneNode(true);
-    newTask.style.display = "block";
-    newTask.querySelector(".taskTitle").textContent = taskName;
-    newTask.querySelector(".taskDescription").textContent = description;
-
-    const removeBtn = newTask.querySelector(".closeTask");
-    removeBtn.addEventListener("click", function () {
-        newTask.remove();
+    const response = await fetch(url, {
+        method,
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        },
+        body: JSON.stringify({
+            title,
+            description,
+            status
+        })
     });
 
-   
-    newTask.classList.remove("to-do", "in-progress", "finished");
-    if (status === "toDo") {
-        newTask.classList.add("to-do");
-        document.getElementById("taskList1").appendChild(newTask);
-    } else if (status === "inProgress") {
-        newTask.classList.add("in-progress");
-        document.getElementById("taskList2").appendChild(newTask);
-    } else if (status === "finished") {
-        newTask.classList.add("finished");
-        document.getElementById("taskList3").appendChild(newTask);
+    if (response.ok) {
+        alert(id ? "Task updated successfully!" : "Task added successfully!");
+        formContainer.style.display = "none";
+        location.reload();
+    } else {
+        alert("Something went wrong!");
     }
-}
+});
+
+// Handle edit button click
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("editTask")) {
+        const id = e.target.getAttribute("data-id");
+        const taskDiv = e.target.closest(".taskObject");
+
+        const title = taskDiv.querySelector(".taskTitle").textContent;
+        const description = taskDiv.querySelector(".taskDescription").textContent;
+        let status = "toDo";
+
+        if (taskDiv.closest("#taskList2")) status = "inProgress";
+        if (taskDiv.closest("#taskList3")) status = "finished";
+
+        // Populate form
+        document.getElementById("taskId").value = id;
+        document.getElementById("taskInput1").value = title;
+        document.getElementById("taskInput2").value = description;
+        document.getElementById("category").value = status;
+        headline.textContent = "Edit Task";
+
+        // Show form
+        formContainer.style.display = "block";
+    }
+});
+
+
+// Handle deleting tasks
+document.addEventListener("click", async function (e) {
+    if (e.target.classList.contains("closeTask")) {
+        const id = e.target.getAttribute("data-id");
+
+        if (confirm("Are you sure you want to delete this task?")) {
+            const response = await fetch(`/tasks/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                }
+            });
+
+            if (response.ok) {
+                alert("Task deleted successfully!");
+                location.reload();
+            } else {
+                alert("Failed to delete task.");
+            }
+        }
+    }
+});
+
